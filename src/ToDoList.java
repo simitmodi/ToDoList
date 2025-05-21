@@ -1,14 +1,17 @@
-
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ToDoList {
     private List<Task> tasks;
-    private static final String FILENAME = "tasks.dat";
+    private static final String FILENAME = "tasks.txt";
 
     public ToDoList() {
-        tasks = FileHandler.loadTasks(FILENAME); // Load tasks on startup
+        // Safely load tasks, ensuring tasks list is never null
+        List<Task> loadedTasks = FileHandler.loadTasks(FILENAME);
+        this.tasks = (loadedTasks != null) ? loadedTasks : new ArrayList<>();
+
+        // Optional: Print debug info
+        System.out.println("Loaded " + tasks.size() + " tasks.");
     }
 
     public void addTask(String title, String description) {
@@ -42,6 +45,6 @@ public class ToDoList {
     }
 
     public void saveTasks() {
-        FileHandler.saveTasks(tasks, FILENAME); // Save tasks before exit
+        FileHandler.saveTasks(tasks, FILENAME);
     }
 }

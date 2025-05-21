@@ -1,5 +1,3 @@
-
-
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -17,6 +15,7 @@ public class FileHandler {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             return (List<Task>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading tasks: " + e.getMessage());
             return new ArrayList<>();
         }
     }
